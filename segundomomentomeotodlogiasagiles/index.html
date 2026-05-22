@@ -1,0 +1,211 @@
+index <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            animation: fadeInUp 0.8s ease;
+            background: linear-gradient(135deg, #1e40af 0%, #0f172a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .card-stat {
+            background: white;
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+
+        .card-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 16px;
+        }
+    </style>
+    <title>rem- Recordatorio de Medicamentos</title>
+</head>
+<body class="bg-gradient-to-b from-slate-50 to-blue-50 text-slate-900">
+
+<!-- ═══ HEADER ═══ -->
+<header class="bg-slate-900 sticky top-0 z-50 shadow-2xl">
+    <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="ec7f138c-ffed-4e54-b95a-7215fd64de31-removebg-preview.png" alt="Logo" height="50" width="150">
+        </div>
+
+        <div class="hidden md:flex items-center space-x-8 text-white text-sm font-medium">
+            <a href="index.html" class="hover:text-blue-300 transition">Inicio</a>
+            <a href="medicamentos.html" class="hover:text-blue-300 transition">App</a>
+            <a href="contacto.html" class="hover:text-blue-300 transition">Contacto</a>
+        </div>
+
+        <a href="login.html"><button class="btn-primary text-white px-8 py-2.5 rounded-full font-bold text-sm">
+            INGRESAR
+        </button></a>
+    </nav>
+</header>
+
+<!-- ═══ HERO SECTION ═══ -->
+<section class="px-6 py-20 md:py-32 text-center">
+    <div class="container mx-auto max-w-4xl">
+        <h1 class="hero-title text-5xl md:text-7xl font-black mb-6 leading-tight">
+            Nunca olvides tus medicamentos
+        </h1>
+
+        <p class="text-xl md:text-2xl text-slate-600 mb-12 leading-relaxed">
+            La solución inteligente para adultos mayores. Recordatorios automáticos, historial completo y tranquilidad.
+        </p>
+
+        <div class="flex gap-4 justify-center flex-wrap">
+            <a href="medicamentos.html"><button class="btn-primary text-white px-10 py-4 rounded-full font-bold text-lg">
+                🚀 Comenzar Ahora
+            </button></a>
+            <button class="border-2 border-blue-500 text-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition">
+                📚 Saber Más
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PROBLEMA & SOLUCIÓN ═══ -->
+<section class="px-6 py-16 bg-white">
+    <div class="container mx-auto max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+            <!-- Problema -->
+            <div>
+                <h2 class="text-4xl font-black text-red-600 mb-6">El Problema 🚨</h2>
+                <div class="space-y-4">
+                    <div class="card-stat p-4 rounded-lg shadow-md">
+                        <p class="text-lg font-bold text-slate-800">50%</p>
+                        <p class="text-slate-600">de adultos mayores olvida sus medicamentos</p>
+                    </div>
+                    <div class="card-stat p-4 rounded-lg shadow-md">
+                        <p class="text-lg font-bold text-slate-800">64%</p>
+                        <p class="text-slate-600">olvida al menos una dosis cada 6 meses</p>
+                    </div>
+                    <div class="card-stat p-4 rounded-lg shadow-md">
+                        <p class="text-lg font-bold text-slate-800">41%</p>
+                        <p class="text-slate-600">falla en tomar medicinas cada 3 meses</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solución -->
+            <div>
+                <h2 class="text-4xl font-black text-green-600 mb-6">La Solución ✅</h2>
+                <div class="space-y-4">
+                    <div class="highlight-box p-6 rounded-lg">
+                        <p class="text-2xl mb-2">⏰ Recordatorios Inteligentes</p>
+                        <p class="text-slate-600">Notificaciones en la hora exacta de cada medicamento</p>
+                    </div>
+                    <div class="highlight-box p-6 rounded-lg">
+                        <p class="text-2xl mb-2">📋 Historial Completo</p>
+                        <p class="text-slate-600">Registro de todos los medicamentos tomados</p>
+                    </div>
+                    <div class="highlight-box p-6 rounded-lg">
+                        <p class="text-2xl mb-2">👥 Múltiples Personas</p>
+                        <p class="text-slate-600">Gestiona medicamentos de toda la familia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CARACTERÍSTICAS ═══ -->
+<section class="px-6 py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+    <div class="container mx-auto max-w-5xl">
+        <h2 class="text-4xl font-black text-center mb-16">¿Por qué elegir Rem? 🏆</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur border border-white border-opacity-20">
+                <p class="text-4xl mb-4">💊</p>
+                <h3 class="text-2xl font-bold mb-3">Fácil de Usar</h3>
+                <p class="text-blue-100">Interfaz intuitiva diseñada para todas las edades. Sin complicaciones.</p>
+            </div>
+
+            <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur border border-white border-opacity-20">
+                <p class="text-4xl mb-4">📱</p>
+                <h3 class="text-2xl font-bold mb-3">Responsive</h3>
+                <p class="text-blue-100">Funciona perfectamente en celular, tablet y computadora.</p>
+            </div>
+
+            <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur border border-white border-opacity-20">
+                <p class="text-4xl mb-4">🔒</p>
+                <h3 class="text-2xl font-bold mb-3">Seguro</h3>
+                <p class="text-blue-100">Tus datos se guardan localmente. 100% privado y confidencial.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="px-6 py-20">
+    <div class="container mx-auto max-w-3xl text-center">
+        <h2 class="text-4xl md:text-5xl font-black mb-6">¿Listo para empezar? 🎯</h2>
+        <p class="text-xl text-slate-600 mb-12">Únete a miles de personas que ya controlan sus medicamentos</p>
+
+        <a href="medicamentos.html"><button class="btn-primary text-white px-12 py-5 rounded-full font-bold text-xl">
+            Comenzar Ahora - Es Gratis
+        </button></a>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="bg-slate-900 text-white mt-20">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <h4 class="font-bold text-lg mb-4">About</h4>
+                <p class="text-slate-400">Rem - Cuidando tu salud.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Links</h4>
+                <p class="text-slate-400 hover:text-white cursor-pointer">Inicio</p>
+                <p class="text-slate-400 hover:text-white cursor-pointer">Contacto</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Legal</h4>
+                <p class="text-slate-400 hover:text-white cursor-pointer">Privacy Policy</p>
+                <p class="text-slate-400 hover:text-white cursor-pointer">Terms</p>
+            </div>
+        </div>
+        <div class="border-t border-slate-700 pt-8 text-center text-slate-400">
+            <p>&copy; 2025 Rem. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

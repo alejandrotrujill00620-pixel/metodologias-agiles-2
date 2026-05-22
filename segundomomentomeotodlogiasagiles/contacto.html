@@ -1,0 +1,271 @@
+contacto 
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contact-form {
+            animation: fadeIn 0.6s ease;
+        }
+
+        .contact-info {
+            animation: fadeIn 0.6s ease 0.2s both;
+        }
+
+        .info-item {
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateX(10px);
+        }
+
+        .input-style {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .input-style:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        }
+
+        .map-placeholder {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(30, 64, 175, 0.1) 100%);
+            border: 2px dashed #3b82f6;
+        }
+    </style>
+    <title>Contacto</title>
+</head>
+<body class="bg-gradient-to-b from-slate-50 to-blue-50 text-slate-900">
+
+<!-- ═══ HEADER ═══ -->
+<header class="bg-slate-900 sticky top-0 z-50 shadow-2xl">
+    <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="ec7f138c-ffed-4e54-b95a-7215fd64de31-removebg-preview.png" alt="Logo" height="50" width="150"> 
+        </div>
+
+        <div class="hidden md:flex items-center space-x-8 text-white text-sm font-medium">
+            <a href="index.html" class="hover:text-blue-300 transition">Inicio</a>
+            <a href="medicamentos.html" class="hover:text-blue-300 transition">App</a>
+            <a href="login.html" class="hover:text-blue-300 transition">Ingresar</a>
+        </div>
+
+        <a href="login.html"><button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold text-sm transition">
+            INGRESAR
+        </button></a>
+    </nav>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="px-6 py-16 md:py-24 text-center">
+    <div class="container mx-auto max-w-4xl">
+        <h1 class="text-5xl md:text-6xl font-black mb-4">
+            ¿Tienes una pregunta? 💬
+        </h1>
+        <p class="text-xl text-slate-600 mb-4">
+            Nos encantaría escucharte. Nuestro equipo está listo para ayudarte.
+        </p>
+    </div>
+</section>
+
+<!-- ═══ CONTACT FORM & INFO ═══ -->
+<section class="px-6 pb-20">
+    <div class="container mx-auto max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-12">
+
+            <!-- FORMULARIO -->
+            <div class="contact-form">
+                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-8">Envíanos un mensaje</h2>
+
+                    <form class="space-y-6">
+                        <!-- Nombre -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">👤 Tu Nombre</label>
+                            <input type="text" placeholder="Juan Pérez" required
+                                class="input-style w-full px-4 py-3 rounded-lg text-base">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">📧 Tu Correo</label>
+                            <input type="email" placeholder="tu@email.com" required
+                                class="input-style w-full px-4 py-3 rounded-lg text-base">
+                        </div>
+
+                        <!-- Asunto -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">📌 Asunto</label>
+                            <input type="text" placeholder="¿Qué necesitas?" required
+                                class="input-style w-full px-4 py-3 rounded-lg text-base">
+                        </div>
+
+                        <!-- Mensaje -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">💬 Mensaje</label>
+                            <textarea rows="5" placeholder="Cuéntanos cómo podemos ayudarte..." required
+                                class="input-style w-full px-4 py-3 rounded-lg text-base resize-none"></textarea>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn-send text-white w-full py-4 rounded-lg font-bold text-lg">
+                            🚀 Enviar Mensaje
+                        </button>
+                    </form>
+
+                    <p class="text-center text-sm text-slate-500 mt-6">
+                        ✅ Responderemos en menos de 24 horas
+                    </p>
+                </div>
+            </div>
+
+            <!-- INFORMACIÓN DE CONTACTO -->
+            <div class="contact-info space-y-8">
+
+                <!-- Oficina -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-blue-500">
+                    <div class="info-item">
+                        <p class="text-4xl mb-3">📍</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Ubicación</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            Medellín, Antioquia<br>
+                            Colombia
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-green-500">
+                    <div class="info-item">
+                        <p class="text-4xl mb-3">📞</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Teléfono</h3>
+                        <a href="tel:+573001234567" class="text-blue-600 hover:underline font-semibold text-lg">
+                            +57 300 123 4567
+                        </a>
+                        <p class="text-slate-600 text-sm mt-2">Lun - Vie: 8:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-purple-500">
+                    <div class="info-item">
+                        <p class="text-4xl mb-3">✉️</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Email</h3>
+                        <a href="mailto:soporte@youralarm.com" class="text-blue-600 hover:underline font-semibold text-lg">
+                            soporte@youralarm.com
+                        </a>
+                        <p class="text-slate-600 text-sm mt-2">Respuesta garantizada en 24h</p>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-2xl shadow-lg">
+                    <p class="text-3xl font-black mb-2">⭐ 4.9/5</p>
+                    <p class="text-blue-100">Basado en 500+ reviews de usuarios satisfechos</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══ MAPA (Placeholder) ═══ -->
+<section class="px-6 pb-20">
+    <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl font-bold text-center mb-8">Encuentranos en el Mapa 🗺️</h2>
+        <div class="map-placeholder h-96 rounded-2xl flex items-center justify-center">
+            <div class="text-center">
+                <p class="text-6xl mb-4">📍</p>
+                <p class="text-slate-600 font-semibold">Mapa interactivo</p>
+                <p class="text-slate-500 text-sm">Medellín, Antioquia - Colombia</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="px-6 pb-20 bg-white">
+    <div class="container mx-auto max-w-4xl">
+        <h2 class="text-4xl font-bold text-center mb-12">Preguntas Frecuentes ❓</h2>
+
+        <div class="space-y-4">
+            <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-blue-500 cursor-pointer hover:bg-slate-100 transition">
+                <p class="font-bold text-slate-900 text-lg">¿Cuánto cuesta rem</p>
+                <p class="text-slate-600 text-sm mt-2">rem es completamente GRATIS. No hay cargos ocultos.</p>
+            </div>
+
+            <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-green-500 cursor-pointer hover:bg-slate-100 transition">
+                <p class="font-bold text-slate-900 text-lg">¿Es segura mi información?</p>
+                <p class="text-slate-600 text-sm mt-2">Sí, todos los datos se guardan localmente en tu dispositivo. 100% privado.</p>
+            </div>
+
+            <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-purple-500 cursor-pointer hover:bg-slate-100 transition">
+                <p class="font-bold text-slate-900 text-lg">¿Necesito crear una cuenta?</p>
+                <p class="text-slate-600 text-sm mt-2">No es requerido. Puedes empezar a usar la app inmediatamente.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="bg-slate-900 text-white">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <h4 class="font-bold text-lg mb-4">Sobre Nosotros</h4>
+                <p class="text-slate-400">rem - Cuidando tu salud y la de tu familia.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Enlaces</h4>
+                <ul class="text-slate-400 space-y-2">
+                    <li><a href="index.html" class="hover:text-white transition">Inicio</a></li>
+                    <li><a href="medicamentos.html" class="hover:text-white transition">App</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Legal</h4>
+                <ul class="text-slate-400 space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Privacidad</a></li>
+                    <li><a href="#" class="hover:text-white transition">Términos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-slate-700 pt-8 text-center text-slate-400">
+            <p>&copy; 2025 Rem. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

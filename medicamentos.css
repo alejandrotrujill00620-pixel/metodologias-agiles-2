@@ -1,0 +1,62 @@
+/* Medicamentos — animaciones y estilos de modal (simplificado para aprendices) */
+* { box-sizing: border-box; }
+body, html { font-family: 'DM Sans', sans-serif; }
+
+/* Card enter animation */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.med-card { animation: slideIn 0.35s ease forwards; }
+
+/* Row enter animation */
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.hist-row { animation: rowIn 0.3s ease forwards; }
+
+/* Shake error */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60%  { transform: translateX(-6px); }
+  40%,80%  { transform: translateX(6px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* Badge pulse for pendiente */
+@keyframes pulse-orange {
+  0%,100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.4); }
+  50%     { box-shadow: 0 0 0 6px rgba(234,88,12,0); }
+}
+.badge-pendiente { animation: pulse-orange 2s infinite; }
+
+/* Tomado confirmation flash */
+@keyframes flashGreen {
+  0%   { background-color: #fff; }
+  40%  { background-color: #dcfce7; }
+  100% { background-color: #fff; }
+}
+.flash-green { animation: flashGreen 0.6s ease; }
+
+/* Button press */
+.btn-guardar:active, .btn-tomar:active { transform: scale(0.97); }
+
+/* Simple input focus */
+.med-input:focus { outline: none; border-color: #111; box-shadow: 0 0 0 3px rgba(17,17,17,0.08); }
+
+/* Modal básico y accesible (aplica a modal-pedir y modal-persona) */
+#modal-pedir, #modal-persona { position: fixed; inset: 0; display: grid; place-items: center; z-index: 60; }
+#modal-pedir .overlay, #modal-persona .overlay { position: absolute; inset: 0; background: rgba(2,6,23,0.6); backdrop-filter: blur(4px); }
+#modal-pedir .dialog, #modal-persona .dialog { position: relative; background: white; width: 92%; max-width: 520px; border-radius: 12px; padding: 20px; box-shadow: 0 8px 40px rgba(2,6,23,0.25); transform: translateY(-8px); }
+#modal-pedir .dialog h3, #modal-persona .dialog h3 { margin: 0 0 8px; font-size: 18px; }
+#modal-pedir .dialog p, #modal-persona .dialog p { margin: 0 0 12px; color: #444; }
+#modal-pedir label, #modal-persona label { display:block; font-size: 13px; margin-bottom:6px; color:#333; }
+#modal-pedir input, #modal-pedir textarea, #modal-pedir select, #modal-persona input, #modal-persona textarea, #modal-persona select { width:100%; padding:10px 12px; border:1px solid #e6e6e6; border-radius:8px; margin-bottom:12px; font-size:14px; }
+#modal-pedir .actions, #modal-persona .actions { display:flex; gap:8px; justify-content:flex-end; }
+#modal-pedir .actions button, #modal-persona .actions button { padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
+#modal-pedir .btn-cancel, #modal-persona .btn-cancel { background:#f3f4f6; border:none; }
+#modal-pedir .btn-send, #modal-persona .btn-send { background:linear-gradient(90deg,#06b6d4,#3b82f6); color:white; border:none; }
+
+/* Hidden helper */
+.hidden { display: none !important; }

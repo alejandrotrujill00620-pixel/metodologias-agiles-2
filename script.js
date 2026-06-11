@@ -3,6 +3,7 @@
 //  Código simplificado para aprender más fácil
 // ═══════════════════════════════════════════════════
 
+var API_BASE = "http://localhost:8080/api";
 var personas = [];
 var medicamentos = {};
 var personaActiva = null;
@@ -25,35 +26,74 @@ var datosIniciales = {
 
 document.addEventListener("DOMContentLoaded", function() {
   cargarDatos();
-  renderizarPanelPersonas();
-  if (personas.length > 0) {
-    seleccionarPersona(personas[0].id);
-  }
 });
 
 function cargarDatos() {
   var savedPersonas = localStorage.getItem("personas");
   var savedMedicamentos = localStorage.getItem("medicamentos");
 
-  if (savedPersonas) { personas = JSON.parse(savedPersonas); }
-  if (savedMedicamentos) { medicamentos = JSON.parse(savedMedicamentos); }
-
-  if (personas.length === 0) {
-    personas = datosIniciales.personas;
+  if (savedPersonas) {
+    personas = JSON.parse(savedPersonas);
+  }
+  if (savedMedicamentos) {
+    medicamentos = JSON.parse(savedMedicamentos);
   }
 
-  if (Object.keys(medicamentos).length === 0) {
-    medicamentos = datosIniciales.medicamentos;
-  }
+  cargarPersonas();
+}
 
-  for (var i = 0; i < personas.length; i++) {
-    var persona = personas[i];
-    if (!medicamentos[persona.id]) {
-      medicamentos[persona.id] = [];
-    }
-  }
+function cargarPersonas() {
+  fetch(API_BASE + "/personas")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      personas = data;
+      if (personas.length === 0) {
+        personas = datosIniciales.personas;
+      }
+      renderizarPanelPersonas();
+      if (personas.length > 0) {
+        seleccionarPersona(personas[0].id);
+      }
+    })
+    .catch(function() {
+      alert("No se pudo conectar al backend. Usando datos locales.");
+      if (personas.length === 0) {
+        personas = datosIniciales.personas;
+      }
+      if (Object.keys(medicamentos).length === 0) {
+        medicamentos = datosIniciales.medicamentos;
+      }
+      renderizarPanelPersonas();
+      if (personas.length > 0) {
+        seleccionarPersona(personas[0].id);
+      }
+    });
+}
 
-  guardarDatos();
+function cargarMedicamentos(personaId, callback) {
+  fetch(API_BASE + "/medicamentos/" + personaId)
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("No data");
+      }
+      return response.json();
+    })
+    .then(function(data) {
+      medicamentos[personaId] = data;
+      if (callback) {
+        callback();
+      }
+    })
+    .catch(function() {
+      if (!medicamentos[personaId]) {
+        medicamentos[personaId] = [];
+      }
+      if (callback) {
+        callback();
+      }
+    });
 }
 
 function guardarDatos() {
@@ -101,21 +141,37 @@ function enviarNuevaPersona() {
   }
 
   var nuevaPersona = {
-    id: Date.now(),
     nombre: nombre,
     apellidos: apellidos,
     documento: documento,
-    avatar: avatar,
-    fechaRegistro: hoy()
+    avatar: avatar
   };
 
-  personas.push(nuevaPersona);
-  medicamentos[nuevaPersona.id] = [];
-  guardarDatos();
-  renderizarPanelPersonas();
-  seleccionarPersona(nuevaPersona.id);
-  cerrarModalAgregarPersona();
-  alert("✅ Persona registrada: " + nuevaPersona.nombre + " " + nuevaPersona.apellidos);
+  fetch(API_BASE + "/personas", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(nuevaPersona)
+  })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("No se pudo crear la persona");
+      }
+      return response.json();
+    })
+    .then(function(data) {
+      personas.push(data);
+      medicamentos[data.id] = [];
+      guardarDatos();
+      renderizarPanelPersonas();
+      seleccionarPersona(data.id);
+      cerrarModalAgregarPersona();
+      alert("✅ Persona registrada: " + data.nombre + " " + data.apellidos);
+    })
+    .catch(function() {
+      alert("No se pudo conectar con el servidor. Intenta más tarde.");
+    });
 }
 
 function eliminarPersona(personaId) {
@@ -123,28 +179,39 @@ function eliminarPersona(personaId) {
     return;
   }
 
-  var nuevaLista = [];
-  for (var i = 0; i < personas.length; i++) {
-    if (personas[i].id !== personaId) {
-      nuevaLista.push(personas[i]);
-    }
-  }
-  personas = nuevaLista;
-  delete medicamentos[personaId];
-  guardarDados();
+  fetch(API_BASE + "/personas/" + personaId, {
+    method: "DELETE"
+  })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("No se pudo eliminar la persona");
+      }
+      var nuevaLista = [];
+      for (var i = 0; i < personas.length; i++) {
+        if (personas[i].id !== personaId) {
+          nuevaLista.push(personas[i]);
+        }
+      }
+      personas = nuevaLista;
+      delete medicamentos[personaId];
+      guardarDatos();
 
-  if (personaActiva === personaId) {
-    if (personas.length > 0) {
-      personaActiva = personas[0].id;
-    } else {
-      personaActiva = null;
-    }
-  }
+      if (personaActiva === personaId) {
+        if (personas.length > 0) {
+          personaActiva = personas[0].id;
+        } else {
+          personaActiva = null;
+        }
+      }
 
-  renderizarPanelPersonas();
-  if (personaActiva) {
-    seleccionarPersona(personaActiva);
-  }
+      renderizarPanelPersonas();
+      if (personaActiva) {
+        seleccionarPersona(personaActiva);
+      }
+    })
+    .catch(function() {
+      alert("No se pudo conectar al backend. Intenta más tarde.");
+    });
 }
 
 function renderizarPanelPersonas() {
@@ -177,10 +244,12 @@ function renderizarPanelPersonas() {
 function seleccionarPersona(personaId) {
   personaActiva = personaId;
   actualizarBotonesActivos();
-  renderizarTarjetas();
-  renderizarHistorial();
-  actualizarBadge();
   actualizarTitulo();
+  cargarMedicamentos(personaId, function() {
+    renderizarTarjetas();
+    renderizarHistorial();
+    actualizarBadge();
+  });
 }
 
 function actualizarBotonesActivos() {
@@ -237,7 +306,6 @@ function agregarMedicamento() {
   errMsg.classList.add("hidden");
 
   var nuevo = {
-    id: Date.now(),
     nombre: nombre,
     dosis: dosis,
     hora: hora,
@@ -245,47 +313,92 @@ function agregarMedicamento() {
     fecha: hoy()
   };
 
-  medicamentos[personaActiva].push(nuevo);
-  guardarDatos();
+  fetch(API_BASE + "/medicamentos/" + personaActiva, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(nuevo)
+  })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("No se pudo agregar el medicamento");
+      }
+      return response.json();
+    })
+    .then(function(data) {
+      if (!medicamentos[personaActiva]) {
+        medicamentos[personaActiva] = [];
+      }
+      medicamentos[personaActiva].push(data);
+      guardarDatos();
 
-  document.getElementById("input-nombre").value = "";
-  document.getElementById("input-dosis").value = "";
-  document.getElementById("input-hora").value = "";
+      document.getElementById("input-nombre").value = "";
+      document.getElementById("input-dosis").value = "";
+      document.getElementById("input-hora").value = "";
 
-  renderizarTarjetas();
-  renderizarHistorial();
-  actualizarBadge();
-  document.getElementById("lista-medicamentos").scrollIntoView({ behavior: "smooth" });
+      renderizarTarjetas();
+      renderizarHistorial();
+      actualizarBadge();
+      document.getElementById("lista-medicamentos").scrollIntoView({ behavior: "smooth" });
+    })
+    .catch(function() {
+      alert("No se pudo conectar al backend. Intenta más tarde.");
+    });
 }
 
 function marcarTomado(medId) {
-  var lista = medicamentos[personaActiva];
-  for (var i = 0; i < lista.length; i++) {
-    if (lista[i].id === medId) {
-      lista[i].tomado = true;
-      break;
-    }
-  }
-
-  guardarDatos();
-  renderizarTarjetas();
-  renderizarHistorial();
-  actualizarBadge();
+  fetch(API_BASE + "/medicamentos/" + personaActiva + "/" + medId + "/tomar", {
+    method: "PUT"
+  })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("No se pudo actualizar el medicamento");
+      }
+      return response.json();
+    })
+    .then(function() {
+      var lista = medicamentos[personaActiva];
+      for (var i = 0; i < lista.length; i++) {
+        if (lista[i].id === medId) {
+          lista[i].tomado = true;
+          break;
+        }
+      }
+      guardarDatos();
+      renderizarTarjetas();
+      renderizarHistorial();
+      actualizarBadge();
+    })
+    .catch(function() {
+      alert("No se pudo conectar al backend. Intenta más tarde.");
+    });
 }
 
 function eliminarMedicamento(medId) {
-  var nuevaLista = [];
-  var lista = medicamentos[personaActiva];
-  for (var i = 0; i < lista.length; i++) {
-    if (lista[i].id !== medId) {
-      nuevaLista.push(lista[i]);
-    }
-  }
-  medicamentos[personaActiva] = nuevaLista;
-  guardarDatos();
-  renderizarTarjetas();
-  renderizarHistorial();
-  actualizarBadge();
+  fetch(API_BASE + "/medicamentos/" + personaActiva + "/" + medId, {
+    method: "DELETE"
+  })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("No se pudo eliminar el medicamento");
+      }
+      var nuevaLista = [];
+      var lista = medicamentos[personaActiva];
+      for (var i = 0; i < lista.length; i++) {
+        if (lista[i].id !== medId) {
+          nuevaLista.push(lista[i]);
+        }
+      }
+      medicamentos[personaActiva] = nuevaLista;
+      guardarDatos();
+      renderizarTarjetas();
+      renderizarHistorial();
+      actualizarBadge();
+    })
+    .catch(function() {
+      alert("No se pudo conectar al backend. Intenta más tarde.");
+    });
 }
 
 function renderizarTarjetas() {
